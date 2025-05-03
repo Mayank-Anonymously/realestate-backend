@@ -23,3 +23,21 @@ exports.submitQuery = async (req, res) => {
 		return res.status(500).json({ message: 'Server error. Please try again.' });
 	}
 };
+
+exports.getAllQuery = async (req, res) => {
+	const findAllQuery = await ContactQuery.find({});
+
+	if (findAllQuery.length === 0) {
+		return res.status(200).json({ message: 'No query found.' });
+	}
+
+	try {
+		return res.status(200).json({
+			message: 'Query submitted successfully.',
+			response: findAllQuery,
+		});
+	} catch (error) {
+		console.error('Error submitting query:', error);
+		return res.status(500).json({ message: 'Server error. Please try again.' });
+	}
+};

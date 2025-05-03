@@ -1,6 +1,8 @@
 require('dotenv').config(); // <-- add this at the top
 const jwt = require('jsonwebtoken');
 const User = require('../models/authModel');
+const UserCRM = require('../models/authCRM');
+
 const { sendOtpEmail } = require('../utils/mailer');
 const crypto = require('crypto');
 const { response } = require('../../api');
@@ -86,4 +88,40 @@ exports.verifyOtp = async (req, res) => {
 	// 		.status(500)
 	// 		.json({ message: 'Error verifying OTP', error: err.message });
 	// }
+};
+
+exports.loginUserCRM = async (req, res) => {
+	const { email, password } = req.body;
+
+	try {
+		const user = await UserCRM.findOne({ email });
+
+		if (user && password) {
+			res.json({
+				status: 'success',
+				_id: user._id,
+				email: user.email,
+				password: user.password,
+			});
+		} else {
+			res.status(401).json({ message: 'Invalid email or password' });
+		}
+	} catch (err) {
+		res.status(500).json({ message: 'Server error', error: err.message });
+	}
+};
+
+exports.getAllUser = async (req, res) => {
+	try {
+		const user = await User.find({});
+		if (user) {
+			res.json({
+				user: user,
+			});
+		} else {
+			res.status(401).json({ message: 'No User found' });
+		}
+	} catch (err) {
+		res.status(500).json({ message: 'Server error', error: err.message });
+	}
 };
