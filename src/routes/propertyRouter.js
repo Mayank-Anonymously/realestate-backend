@@ -1,12 +1,14 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const propertyController = require("../controller/propertyController");
+const propertyController = require('../controller/propertyController');
 
+router.get('/get-detail-by-id/:id', propertyController.getAllProperties);
+router.post('/properties', propertyController.createProperty);
+router.get('/search-properties/:query', propertyController.searchProperty);
 router.get(
-  "/get-detail-by-id/:title/:rent",
-  propertyController.getAllProperties
+	'/get-properties-by-city/:query',
+	propertyController.searchPropertyCity
 );
-router.post("/properties", propertyController.createProperty);
-router.get("/search-properties/:query", propertyController.searchProperty);
+router.get('/get-properties-by-city', propertyController.getAllPropertiesss);
 
 module.exports = router;
