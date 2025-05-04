@@ -1,8 +1,8 @@
+require('dotenv').config(); // <-- add this at the top
+
 const mongoose = require('mongoose');
 
-const mongoURI =
-	'mongodb+srv://nexsolvesolutions:34598345790237598714327534@cluster0.ecnexqv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-
+const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI);
 
 const db = mongoose.connection;

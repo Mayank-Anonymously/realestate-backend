@@ -1,16 +1,16 @@
 // index.js
 
-const serverless = require("serverless-http");
-
+const serverless = require('serverless-http');
 const express = require('express');
 const path = require('path');
 const propertyRouter = require('../src/routes/propertyRouter.js');
 const listrouter = require('../src/routes/listingRoute.js');
 const app = express();
-const cors = require("cors");
+const cors = require('cors');
 const router = require('../src/routes/authRoute.js');
+const queryrouter = require('../src/routes/queryRouter.js');
 const PORT = process.env.PORT || 9292;
-require("../src/config/dbconnect.js");
+require('../src/config/dbconnect.js');
 
 // Middleware
 app.use(cors());
@@ -21,14 +21,16 @@ app.use(express.urlencoded({ extended: true })); // to parse application/x-www-f
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/property", propertyRouter);
-app.use("/listing", listrouter);
-app.use("/auth", router);
+app.use('/property', propertyRouter);
+app.use('/listing', listrouter);
+app.use('/auth', router);
 
-// app.listen(PORT, () => {
-//   console.log(`Server running at http://localhost:${PORT}`);
-// });
+app.use('/contact', queryrouter);
+
+app.listen(PORT, () => {
+	console.log(`Server running at http://localhost:${PORT}`);
+});
 
 module.exports = app;
 
-module.exports.handler = serverless(app);
+// module.exports.handler = serverless(app);
