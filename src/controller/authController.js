@@ -102,6 +102,8 @@ exports.loginUserCRM = async (req, res) => {
 				_id: user._id,
 				email: user.email,
 				password: user.password,
+				firstName: user.firstName,
+				lastName: user.lastName,
 			});
 		} else {
 			res.status(401).json({ message: 'Invalid email or password' });
