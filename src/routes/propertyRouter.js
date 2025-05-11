@@ -10,5 +10,9 @@ router.get(
 	propertyController.searchPropertyCity
 );
 router.get('/get-properties-by-city', propertyController.getAllPropertiesss);
+router.get(
+	'/filters/descriptions',
+	propertyController.getUniqueFiltersFromDescriptions
+);
 
 module.exports = router;
