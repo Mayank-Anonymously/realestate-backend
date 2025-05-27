@@ -58,15 +58,15 @@ exports.searchPropertyCity = async (req, res) => {
 	}
 };
 
-exports.getAllPropertiesss = async (req, res) => {
-	try {
-		const property = await housingUnit.find();
+// exports.getAllPropertiesss = async (req, res) => {
+// 	try {
+// 		const property = await housingUnit.find();
 
-		res.json(property);
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
-};
+// 		res.json(property);
+// 	} catch (err) {
+// 		res.status(500).json({ message: err.message });
+// 	}
+// };
 
 exports.getUniqueFiltersFromDescriptions = async (req, res) => {
 	try {
@@ -164,6 +164,68 @@ exports.getFilteredProperties = async (req, res) => {
 		res.status(200).json(results);
 	} catch (err) {
 		console.error('Error fetching filtered properties:', err.message);
+		res.status(500).json({ message: err.message });
+	}
+};
+
+// Utility to parse description string
+function parsePropertyDescription(description) {
+	const parts = description.split('•').map((part) => part.trim());
+
+	const data = {
+		bedrooms: null,
+		bathrooms: null,
+		type: null,
+	};
+
+	parts.forEach((part) => {
+		const lower = part.toLowerCase();
+
+		if (lower.includes('bed')) {
+			const match = part.match(/\d+/);
+			if (match) data.bedrooms = parseInt(match[0], 10);
+		} else if (lower.includes('bath')) {
+			const match = part.match(/\d+/);
+			if (match) data.bathrooms = parseInt(match[0], 10);
+		} else {
+			data.type = part;
+		}
+	});
+
+	return data;
+}
+
+exports.getAllPropertiesss = async (req, res) => {
+	try {
+		const properties = await housingUnit.find();
+
+		const updatedProperties = [];
+
+		for (const prop of properties) {
+			if (!prop.description) continue;
+
+			const { bedrooms, bathrooms, type } = parsePropertyDescription(
+				prop.description
+			);
+
+			// Update only if new data is found
+			if (bedrooms || bathrooms || type) {
+				prop.bedrooms = bedrooms;
+				prop.bathrooms = bathrooms;
+				prop.type = type;
+
+				await prop.save(); // Save back to DB
+				updatedProperties.push(prop);
+			}
+		}
+
+		res.json({
+			message: 'Properties updated successfully',
+			updatedCount: updatedProperties.length,
+			data: updatedProperties,
+		});
+		
+	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
 };

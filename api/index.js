@@ -27,10 +27,10 @@ app.use('/auth', router);
 
 app.use('/contact', queryrouter);
 
-// app.listen(PORT, () => {
-// 	console.log(`Server running at http://localhost:${PORT}`);
-// });
+app.listen(PORT, () => {
+	console.log(`Server running at http://localhost:${PORT}`);
+});
 
 module.exports = app;
 
-module.exports.handler = serverless(app);
+// module.exports.handler = serverless(app);
