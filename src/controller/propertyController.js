@@ -58,15 +58,15 @@ exports.searchPropertyCity = async (req, res) => {
 	}
 };
 
-// exports.getAllPropertiesss = async (req, res) => {
-// 	try {
-// 		const property = await housingUnit.find();
+exports.getAllPropertiesss = async (req, res) => {
+	try {
+		const property = await housingUnit.find();
 
-// 		res.json(property);
-// 	} catch (err) {
-// 		res.status(500).json({ message: err.message });
-// 	}
-// };
+		res.json(property);
+	} catch (err) {
+		res.status(500).json({ message: err.message });
+	}
+};
 
 exports.getUniqueFiltersFromDescriptions = async (req, res) => {
 	try {
@@ -195,37 +195,37 @@ function parsePropertyDescription(description) {
 	return data;
 }
 
-exports.getAllPropertiesss = async (req, res) => {
-	try {
-		const properties = await housingUnit.find();
+// exports.getAllPropertiesss = async (req, res) => {
+// 	try {
+// 		const properties = await housingUnit.find();
 
-		const updatedProperties = [];
+// 		const updatedProperties = [];
 
-		for (const prop of properties) {
-			if (!prop.description) continue;
+// 		for (const prop of properties) {
+// 			if (!prop.description) continue;
 
-			const { bedrooms, bathrooms, type } = parsePropertyDescription(
-				prop.description
-			);
+// 			const { bedrooms, bathrooms, type } = parsePropertyDescription(
+// 				prop.description
+// 			);
 
-			// Update only if new data is found
-			if (bedrooms || bathrooms || type) {
-				prop.bedrooms = bedrooms;
-				prop.bathrooms = bathrooms;
-				prop.type = type;
+// 			// Update only if new data is found
+// 			if (bedrooms || bathrooms || type) {
+// 				prop.bedrooms = bedrooms;
+// 				prop.bathrooms = bathrooms;
+// 				prop.type = type;
 
-				await prop.save(); // Save back to DB
-				updatedProperties.push(prop);
-			}
-		}
+// 				await prop.save(); // Save back to DB
+// 				updatedProperties.push(prop);
+// 			}
+// 		}
 
-		res.json({
-			message: 'Properties updated successfully',
-			updatedCount: updatedProperties.length,
-			data: updatedProperties,
-		});
+// 		res.json({
+// 			message: 'Properties updated successfully',
+// 			updatedCount: updatedProperties.length,
+// 			data: updatedProperties,
+// 		});
 		
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
-};
+// 	} catch (err) {
+// 		res.status(500).json({ message: err.message });
+// 	}
+// };
