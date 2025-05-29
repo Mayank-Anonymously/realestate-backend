@@ -9,11 +9,11 @@ router.get(
 	'/get-properties-by-city/:query',
 	propertyController.searchPropertyCity
 );
-// router.get('/get-properties-by-city', propertyController.getAllPropertiesss);
+router.get('/get-all-properties-city', propertyController.getAllPropertiesss);
 router.get(
 	'/filters/descriptions',
 	propertyController.getUniqueFiltersFromDescriptions
 );
 
-router.get('/update-property-fields', propertyController.getAllPropertiesss);
+// router.get('/update-property-fields', propertyController.getAllPropertiesss);
 module.exports = router;
