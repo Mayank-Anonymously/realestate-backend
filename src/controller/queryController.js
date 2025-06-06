@@ -1,27 +1,58 @@
 const ContactQuery = require('../models/queryModel');
 exports.submitQuery = async (req, res) => {
-	const { title, address, name, contactNo, email, query } = req.body;
-	if (!title || !address || !name || !contactNo || !email || !query) {
-		return res.status(400).json({ message: 'All fields are required.' });
-	}
+  const {
+    property,
+    firstName,
+    lastName,
+    email,
+    phone,
+    dob,
+    disabled,
+    income,
+    rent,
+    veteran,
+    signature,
+    referral,
+  } = req.body;
 
-	try {
-		const newQuery = new ContactQuery({
-			title,
-			address,
-			name,
-			contactNo,
-			email,
-			query,
-		});
+  // Basic validation
+  if (
+    !property ||
+    !firstName ||
+    !lastName ||
+    !email ||
+    !phone ||
+    !dob ||
+    !income ||
+    !rent ||
+    !signature
+  ) {
+    return res.status(400).json({ message: 'All required fields must be filled.' });
+  }
 
-		await newQuery.save();
+  try {
+    const newQuery = new ContactQuery({
+      property,
+      firstName,
+      lastName,
+      email,
+      phone,
+      dob: new Date(dob), // ensure proper Date format
+      disabled: !!disabled,
+      income,
+      rent,
+      veteran: !!veteran,
+      signature,
+      referral,
+    });
 
-		return res.status(200).json({ message: 'Query submitted successfully.' });
-	} catch (error) {
-		console.error('Error submitting query:', error);
-		return res.status(500).json({ message: 'Server error. Please try again.' });
-	}
+    await newQuery.save();
+
+    return res.status(200).json({ message: 'Query submitted successfully.' });
+  } catch (error) {
+    console.error('Error submitting query:', error);
+    return res.status(500).json({ message: 'Server error. Please try again.' });
+  }
 };
 
 exports.getAllQuery = async (req, res) => {
@@ -41,3 +72,4 @@ exports.getAllQuery = async (req, res) => {
 		return res.status(500).json({ message: 'Server error. Please try again.' });
 	}
 };
+c
