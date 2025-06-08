@@ -224,7 +224,7 @@ function parsePropertyDescription(description) {
 // 			updatedCount: updatedProperties.length,
 // 			data: updatedProperties,
 // 		});
-		
+
 // 	} catch (err) {
 // 		res.status(500).json({ message: err.message });
 // 	}
