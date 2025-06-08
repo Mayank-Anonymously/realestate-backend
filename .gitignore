@@ -1,8 +1,7 @@
 # Dependency directories
 node_modules/
 
-# Environment variables
-.env
+
 
 # Optional logs, OS, and editor settings
 *.log
