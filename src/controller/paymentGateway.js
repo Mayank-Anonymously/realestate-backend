@@ -21,8 +21,8 @@ exports.createProductAndPrice = async (req, res) => {
 			payment_method_types: ['card'],
 			line_items: [
 				{
-					price: price.id, // Correct property
-					quantity: 1, // Quantity should be hardcoded or from req.body if provided
+					price: price.id,
+					quantity: 1,
 				},
 			],
 			mode: 'payment',
