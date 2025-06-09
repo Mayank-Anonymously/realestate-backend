@@ -23,6 +23,8 @@ exports.loginUser = async (req, res) => {
 				token: generateToken(user._id),
 				firstName: user.firstName,
 				lastName: user.lastName,
+				premiumEnabled :  user.premiumEnabled,
+				premiumPlan : user.premiumPlan
 			});
 		} else {
 			res.status(401).json({ message: 'Invalid email or password' });
@@ -129,3 +131,36 @@ exports.getAllUser = async (req, res) => {
 		res.status(500).json({ message: 'Server error', error: err.message });
 	}
 };
+
+
+exports.updateSubscription = async (req, res) => {
+
+	const { userid } = req.params
+	const { plan } = req.body
+
+
+	console.log(userid  , plan)
+	const userss = await User.findOne({ _id: userid })
+	console.log(userss)
+	try {
+
+		if (userss) {
+
+
+			res.status(200).json({
+				message: "Subscription updated succesfully", response: await User.updateOne({
+					_id: userid,
+				},
+
+					{ $set: { premiumEnabled: true, premiumPlan: plan } })
+			}, { new: true })
+
+
+		} else {
+			res.status(500).json({ message: "Internal server error" })
+		}
+	} catch (error) {
+		res.status(500).json({ message: error })
+
+	}
+}

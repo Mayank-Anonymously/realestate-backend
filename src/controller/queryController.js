@@ -138,7 +138,13 @@ exports.submitQuery = async (req, res) => {
     console.error('Error submitting query:', error);
     return res.status(500).json({ message: 'Server error. Please try again.' });
   }
-}}
+}catch (error) {
+    console.error('Error submitting query:', error);
+    return res.status(500).json({ message: 'Server error. Please try again.' });
+  }
+}
+
+
 
 exports.getAllQuery = async (req, res) => {
 	const findAllQuery = await ContactQuery.find({});
