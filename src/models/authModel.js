@@ -23,6 +23,8 @@ const userSchema = new mongoose.Schema({
 	authenticated: { type: Boolean },
 	otp: { type: String, required: true },
 	otpExpiry: { type: Date },
+	premiumEnabled : { type : Boolean},
+	premiumPlan : {type : String}
 });
 
 // Hash password before saving

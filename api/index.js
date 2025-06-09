@@ -9,6 +9,7 @@ const app = express();
 const cors = require('cors');
 const router = require('../src/routes/authRoute.js');
 const queryrouter = require('../src/routes/queryRouter.js');
+const paymentrouter = require('../src/routes/paymentRouter.js');
 const PORT = process.env.PORT || 9292;
 require('../src/config/dbconnect.js');
 
@@ -26,6 +27,7 @@ app.use('/listing', listrouter);
 app.use('/auth', router);
 
 app.use('/contact', queryrouter);
+app.use('/payment-gateway', paymentrouter);
 
 app.listen(PORT, () => {
 	console.log(`Server running at http://localhost:${PORT}`);

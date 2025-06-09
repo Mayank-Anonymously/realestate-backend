@@ -1,1 +1,8 @@
-node_modules
+# Dependency directories
+node_modules/
+
+
+
+# Optional logs, OS, and editor settings
+*.log
+.DS_Store
