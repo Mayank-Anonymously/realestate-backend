@@ -1,17 +1,17 @@
 // index.js
 
-const serverless = require('serverless-http');
-const express = require('express');
-const path = require('path');
-const propertyRouter = require('../src/routes/propertyRouter.js');
-const listrouter = require('../src/routes/listingRoute.js');
+const express = require("express");
+const path = require("path");
+const propertyRouter = require("../src/routes/propertyRouter.js");
+const listrouter = require("../src/routes/listingRoute.js");
 const app = express();
-const cors = require('cors');
-const router = require('../src/routes/authRoute.js');
-const queryrouter = require('../src/routes/queryRouter.js');
-const paymentrouter = require('../src/routes/paymentRouter.js');
+const cors = require("cors");
+const router = require("../src/routes/authRoute.js");
+const queryrouter = require("../src/routes/queryRouter.js");
+const paymentrouter = require("../src/routes/paymentRouter.js");
+const saveIMagerouter = require("../src/routes/imageSaveRouter.js");
 const PORT = process.env.PORT || 9292;
-require('../src/config/dbconnect.js');
+require("../src/config/dbconnect.js");
 
 // Middleware
 app.use(cors());
@@ -20,17 +20,19 @@ app.use(cors());
 app.use(express.json()); // to parse application/json
 app.use(express.urlencoded({ extended: true })); // to parse application/x-www-form-urlencoded
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/property', propertyRouter);
-app.use('/listing', listrouter);
-app.use('/auth', router);
+app.use("/property", propertyRouter);
+app.use("/listing", listrouter);
+app.use("/auth", router);
+app.use("/resources", express.static(path.join(__dirname, "../src/uploads")));
 
-app.use('/contact', queryrouter);
-app.use('/payment-gateway', paymentrouter);
+app.use("/contact", queryrouter);
+app.use("/payment-gateway", paymentrouter);
+app.use("/submit-images", saveIMagerouter);
 
 app.listen(PORT, () => {
-	console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
 
 module.exports = app;
