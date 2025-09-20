@@ -1,5 +1,5 @@
 require("dotenv").config();
-const stripe = require("stripe")("sk_test_51RM8yVSJGuAdYgYIz3a4nwG8YYruC4VLRMOqRscW1Unqvi6p8eJifYfBowm206FDyEUm1Vv51HVdA9zzBcRmXCTQ00ytORaVrnmig");
+const stripe = require("stripe")("");
 
 exports.createProductAndPrice = async (req, res) => {
   const { name, amount, currency, successUrl, failedUrl } = req.body;
